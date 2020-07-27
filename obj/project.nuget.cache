@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "udLGJ7Um14WPdCP94g09fdlkzIN3ZNNMDXvAleY8MnbuHVsomjKxDP5iR3pdlO0hy850krpJiEY/B3nKTX70YQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Anastasia\\source\\repos\\MyApp\\MyApp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Anastasia\\.nuget\\packages\\google.apis\\1.48.0\\google.apis.1.48.0.nupkg.sha512",
+    "C:\\Users\\Anastasia\\.nuget\\packages\\google.apis.auth\\1.48.0\\google.apis.auth.1.48.0.nupkg.sha512",
+    "C:\\Users\\Anastasia\\.nuget\\packages\\google.apis.core\\1.48.0\\google.apis.core.1.48.0.nupkg.sha512",
+    "C:\\Users\\Anastasia\\.nuget\\packages\\google.apis.sheets.v4\\1.48.0.2021\\google.apis.sheets.v4.1.48.0.2021.nupkg.sha512",
+    "C:\\Users\\Anastasia\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
