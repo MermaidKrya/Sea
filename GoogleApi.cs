@@ -35,21 +35,8 @@ public class GoogleApi
         });
     }
 
-    public int[,] ReadEntries()
+    public static int[,] ReadEntries()
     {
-        GoogleCredential credential;
-        using (var stream = new FileStream("client_secrets.json", FileMode.Open, FileAccess.Read))
-        {
-            credential = GoogleCredential.FromStream(stream)
-                .CreateScoped(Scopes);
-        }
-
-        service = new SheetsService(new Google.Apis.Services.BaseClientService.Initializer()
-        {
-            HttpClientInitializer = credential,
-            ApplicationName = ApplicationName,
-        });
-
         var range = $"{sheet}!A1:J10"; //задаем диапазоны
         var request = service.Spreadsheets.Values.Get(SpreadSheetId, range); //объект запроса
 
@@ -63,7 +50,11 @@ public class GoogleApi
             {            
             foreach (var raw in values)
                 {
-                    for (int i = 0; i < 10; i++)
+                while (raw.Count < 10)
+                {
+                    raw.Add("");
+                }
+                for (int i = 0; i < 10; i++)
                     {
                         if (raw[i] == "")
                         {

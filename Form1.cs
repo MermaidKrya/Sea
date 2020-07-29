@@ -14,11 +14,13 @@ namespace MyApp
     {
         public const int mapSize = 10;
         public int cellSize = 30;
-        public string alphabet = "АБВГДЕЖЗИК";
 
         public int[,] myMap = new int[mapSize, mapSize];
+        public int[,] enemyMap = new int[mapSize, mapSize];
 
         public Button[,] myButtons = new Button[mapSize, mapSize];
+        public Button[,] enemyButtons = new Button[mapSize, mapSize];
+
         public static bool isPlaying = false;
         public Form1()
         {
@@ -30,10 +32,13 @@ namespace MyApp
         public void Init()
         {
             isPlaying = false;
-            CreateMaps();
+            GoogleApi.Acsess();
+            GoogleApi.array = GoogleApi.ReadEntries();
+            CreateMyMap();
+            ButtonStart();
         }
 
-        public void CreateMaps()
+        public void CreateMyMap()
         {
             this.Width = mapSize * 2 * cellSize + 50;
             this.Height = (mapSize + 3) * cellSize + 20;
@@ -47,33 +52,41 @@ namespace MyApp
                     button.Location = new Point(j * cellSize, i * cellSize);
                     button.Size = new Size(cellSize, cellSize);
                     button.BackColor = Color.White;
-                    GoogleApi myApi = new GoogleApi();
-                            if (GoogleApi.array[i, j] != 0)
-                            {
-                                //myMap[i, j] = 1;
-                                button.BackColor = Color.Red;
-                            }
-                            else
-                            {
-                                button.BackColor = Color.Gray;
-                            }
-                    /*if (j == 0 || i == 0)
-                    {
-                        button.BackColor = Color.Gray;
-                        if (i == 0 && j > 0)
-                            button.Text = alphabet[j - 1].ToString();
-                        if (j == 0 && i > 0)
-                            button.Text = i.ToString();
-                    }*/
                     myButtons[i, j] = button;
                     this.Controls.Add(button);
                 }
             }
             Label map1 = new Label();
-            map1.Text = "Карта игрока";
+            map1.Text = "Игрок";
             map1.Location = new Point(mapSize * cellSize / 2, mapSize * cellSize + 10);
             this.Controls.Add(map1);
+        }//записать в одну функцию
 
+        public void CreateEnemyMap()
+        {
+            for (int i = 0; i < mapSize; i++)
+            {
+                for (int j = 0; j < mapSize; j++)
+                {
+                    enemyMap[i, j] = 0;
+
+                    Button button = new Button();
+                    button.Location = new Point(320 + j * cellSize, i * cellSize);
+                    button.Size = new Size(cellSize, cellSize);
+                    button.BackColor = Color.White;
+                    button.Click += new EventHandler(PlayerShoot);
+                    enemyButtons[i, j] = button;
+                    this.Controls.Add(button);
+                }
+            }
+            Label map2 = new Label();
+            map2.Text = "Противник";
+            map2.Location = new Point(mapSize * cellSize / 2, mapSize * cellSize + 10);
+            this.Controls.Add(map2);
+        }
+
+        public void ButtonStart()
+        {
             Button startButton = new Button();
             startButton.Text = "Начать";
             startButton.Click += new EventHandler(Start);
@@ -84,30 +97,74 @@ namespace MyApp
         public void Start(object sender, EventArgs e)
         {
             isPlaying = true;
-            //myMap = ConfigureShips();
+            ClearPole();
+            ConfigureShips();
+            CreateEnemyMap();
         }
 
-        public int[,] ConfigureShips()
+        public void ClearPole()
         {
-            Button button = new Button();
-            GoogleApi myObject = new GoogleApi();
-            for (int i = 0; i < 10; i++)
+            this.Controls.Clear();
+        }
+
+        public void ConfigureShips()
+        {
+            for (int i = 0; i < mapSize; i++)
             {
-                for (int j = 0; j < 10; j++)
+                for (int j = 0; j < mapSize; j++)
                 {
-                    if (myObject.ReadEntries()[i, j] != 0)
+                    Button button = new Button();
+                    button.Location = new Point(j * cellSize, i * cellSize);
+                    button.Size = new Size(cellSize, cellSize);
+                    button.BackColor = Color.Blue;
+                    if (GoogleApi.array[i, j] == 1)
                     {
-                        //myMap[i, j] = 1;
                         button.BackColor = Color.Red;
+                        myMap[i, j] = 1;
                     }
                     else
                     {
                         button.BackColor = Color.Gray;
+                        myMap[i, j] = 0;
                     }
-
+                    myButtons[i, j] = button;
+                    this.Controls.Add(button);
                 }
             }
-            return myMap;
+            Label map = new Label();
+            map.Text = "Игрок";
+            map.Location = new Point(mapSize * cellSize / 2, mapSize * cellSize + 10);
+            this.Controls.Add(map);
+        }
+
+        public void PlayerShoot(object sender, EventArgs e)
+        {
+            Button pressedButton = sender as Button;
+            Shoot(enemyMap, pressedButton);
+        }
+
+        public bool Shoot(int[,] map, Button pressedButton)
+        {
+            bool hit = false;
+            if (isPlaying)
+            {
+                int delta = 0;
+                if (pressedButton.Location.X >= 320)
+                    delta = 320;
+                if (map[(pressedButton.Location.Y) / cellSize, (pressedButton.Location.X - delta) / cellSize] != 0)
+                {
+                    hit = true;
+                    map[pressedButton.Location.Y / cellSize, (pressedButton.Location.X - delta) / cellSize] = 0;
+                    pressedButton.BackColor = Color.Blue;
+                    pressedButton.Text = "X";
+                }
+                else
+                {
+                    hit = false;
+                    pressedButton.BackColor = Color.Black;
+                }
+            }
+            return hit;
         }
 
     }
