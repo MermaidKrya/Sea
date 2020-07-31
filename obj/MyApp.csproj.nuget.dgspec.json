@@ -41,6 +41,10 @@
             "Google.Apis.Sheets.v4": {
               "target": "Package",
               "version": "[1.48.0.2021, )"
+            },
+            "VisioForge.DotNet.Core.TRIAL": {
+              "target": "Package",
+              "version": "[12.0.39, )"
             }
           },
           "imports": [

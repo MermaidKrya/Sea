@@ -62,6 +62,29 @@
         "runtime": {
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
+      },
+      "VisioForge.DotNet.Core.TRIAL/12.0.39": {
+        "type": "package",
+        "compile": {
+          "lib/net45/VisioForge.Controls.UI.Dialogs.dll": {},
+          "lib/net45/VisioForge.Controls.UI.dll": {},
+          "lib/net45/VisioForge.Controls.dll": {},
+          "lib/net45/VisioForge.DirectX.dll": {},
+          "lib/net45/VisioForge.MediaFramework.dll": {},
+          "lib/net45/VisioForge.Shared.dll": {},
+          "lib/net45/VisioForge.Tools.dll": {},
+          "lib/net45/VisioForge.Types.dll": {}
+        },
+        "runtime": {
+          "lib/net45/VisioForge.Controls.UI.Dialogs.dll": {},
+          "lib/net45/VisioForge.Controls.UI.dll": {},
+          "lib/net45/VisioForge.Controls.dll": {},
+          "lib/net45/VisioForge.DirectX.dll": {},
+          "lib/net45/VisioForge.MediaFramework.dll": {},
+          "lib/net45/VisioForge.Shared.dll": {},
+          "lib/net45/VisioForge.Tools.dll": {},
+          "lib/net45/VisioForge.Types.dll": {}
+        }
       }
     }
   },
@@ -193,11 +216,32 @@
         "newtonsoft.json.nuspec",
         "packageIcon.png"
       ]
+    },
+    "VisioForge.DotNet.Core.TRIAL/12.0.39": {
+      "sha512": "kyiwrJ16JuWfI6m0qKJJE9B7LfbXNMt6wDCM2nkJiq5xuwlRTmmGM23EioH+RWf/RRlAJ+Z4qqdTIQWOowdbPg==",
+      "type": "package",
+      "path": "visioforge.dotnet.core.trial/12.0.39",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/VisioForge.Controls.UI.Dialogs.dll",
+        "lib/net45/VisioForge.Controls.UI.dll",
+        "lib/net45/VisioForge.Controls.dll",
+        "lib/net45/VisioForge.DirectX.dll",
+        "lib/net45/VisioForge.MediaFramework.dll",
+        "lib/net45/VisioForge.Shared.dll",
+        "lib/net45/VisioForge.Tools.dll",
+        "lib/net45/VisioForge.Types.dll",
+        "readme.txt",
+        "visioforge.dotnet.core.trial.12.0.39.nupkg.sha512",
+        "visioforge.dotnet.core.trial.nuspec"
+      ]
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
-      "Google.Apis.Sheets.v4 >= 1.48.0.2021"
+      "Google.Apis.Sheets.v4 >= 1.48.0.2021",
+      "VisioForge.DotNet.Core.TRIAL >= 12.0.39"
     ]
   },
   "packageFolders": {
@@ -240,6 +284,10 @@
           "Google.Apis.Sheets.v4": {
             "target": "Package",
             "version": "[1.48.0.2021, )"
+          },
+          "VisioForge.DotNet.Core.TRIAL": {
+            "target": "Package",
+            "version": "[12.0.39, )"
           }
         },
         "imports": [
@@ -263,5 +311,17 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Пакет \"VisioForge.DotNet.Core.TRIAL 12.0.39\" был восстановлен с помощью \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8\", а не целевой платформы проекта \".NETCoreApp,Version=v3.1\". Этот пакет может быть не полностью совместим с вашим проектом.",
+      "libraryId": "VisioForge.DotNet.Core.TRIAL",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    }
+  ]
 }

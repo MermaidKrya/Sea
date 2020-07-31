@@ -11,7 +11,7 @@ public class GoogleApi
     static readonly string SpreadSheetId = "1eb2vaC45-prUvId_fjTEPqHbbeXYbooVciDVkXQBmkU";
     static readonly string sheet = "Number1";
     static SheetsService service;
-    static public int[,] array = new int[10, 10];
+    static public object[,] array = new object[10, 10];
 
     public GoogleApi()
 	{
@@ -35,14 +35,14 @@ public class GoogleApi
         });
     }
 
-    public static int[,] ReadEntries()
+    public static object[,] ReadEntries()
     {
         var range = $"{sheet}!A1:J10"; //задаем диапазоны
         var request = service.Spreadsheets.Values.Get(SpreadSheetId, range); //объект запроса
 
         var response = request.Execute(); //объект ответа
         var values = response.Values; //доступ к значниям
-        int[,] mass = new int[10, 10];
+        object[,] mass = new object[10, 10];
         //if (values != null && values.Count > 0)
         //{
             int j = 0;
@@ -56,18 +56,10 @@ public class GoogleApi
                 }
                 for (int i = 0; i < 10; i++)
                     {
-                        if (raw[i] == "")
-                        {
-                            mass[j, i] = 0;
-                        }
-                        else
-                        {
-                            mass[j, i] = 1;
-                        }
+                    mass[j, i] = raw[i];
                     }
                     j++;
                 }
-
             }
         return mass;
     }

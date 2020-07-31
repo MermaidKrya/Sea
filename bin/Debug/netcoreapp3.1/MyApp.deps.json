@@ -8,7 +8,8 @@
     ".NETCoreApp,Version=v3.1": {
       "MyApp/1.0.0": {
         "dependencies": {
-          "Google.Apis.Sheets.v4": "1.48.0.2021"
+          "Google.Apis.Sheets.v4": "1.48.0.2021",
+          "VisioForge.DotNet.Core.TRIAL": "12.0.39"
         },
         "runtime": {
           "MyApp.dll": {}
@@ -71,6 +72,42 @@
             "fileVersion": "12.0.3.23909"
           }
         }
+      },
+      "VisioForge.DotNet.Core.TRIAL/12.0.39": {
+        "runtime": {
+          "lib/net45/VisioForge.Controls.UI.Dialogs.dll": {
+            "assemblyVersion": "12.0.39.0",
+            "fileVersion": "12.0.39.0"
+          },
+          "lib/net45/VisioForge.Controls.UI.dll": {
+            "assemblyVersion": "12.0.39.0",
+            "fileVersion": "12.0.39.0"
+          },
+          "lib/net45/VisioForge.Controls.dll": {
+            "assemblyVersion": "12.0.39.0",
+            "fileVersion": "12.0.39.0"
+          },
+          "lib/net45/VisioForge.DirectX.dll": {
+            "assemblyVersion": "2.6.3.0",
+            "fileVersion": "2.6.3.0"
+          },
+          "lib/net45/VisioForge.MediaFramework.dll": {
+            "assemblyVersion": "12.0.39.0",
+            "fileVersion": "12.0.39.0"
+          },
+          "lib/net45/VisioForge.Shared.dll": {
+            "assemblyVersion": "12.0.39.0",
+            "fileVersion": "12.0.39.0"
+          },
+          "lib/net45/VisioForge.Tools.dll": {
+            "assemblyVersion": "12.0.39.0",
+            "fileVersion": "12.0.39.0"
+          },
+          "lib/net45/VisioForge.Types.dll": {
+            "assemblyVersion": "12.0.39.0",
+            "fileVersion": "12.0.39.0"
+          }
+        }
       }
     }
   },
@@ -114,6 +151,13 @@
       "sha512": "sha512-6mgjfnRB4jKMlzHSl+VD+oUc1IebOZabkbyWj2RiTgWwYPPuaK1H97G1sHqGwPlS5npiF5Q0OrxN1wni2n5QWg==",
       "path": "newtonsoft.json/12.0.3",
       "hashPath": "newtonsoft.json.12.0.3.nupkg.sha512"
+    },
+    "VisioForge.DotNet.Core.TRIAL/12.0.39": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-kyiwrJ16JuWfI6m0qKJJE9B7LfbXNMt6wDCM2nkJiq5xuwlRTmmGM23EioH+RWf/RRlAJ+Z4qqdTIQWOowdbPg==",
+      "path": "visioforge.dotnet.core.trial/12.0.39",
+      "hashPath": "visioforge.dotnet.core.trial.12.0.39.nupkg.sha512"
     }
   }
 }
