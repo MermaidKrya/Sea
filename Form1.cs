@@ -21,6 +21,7 @@ namespace MyApp
         public Button[,] myButtons = new Button[mapSize, mapSize];
         public Button[,] enemyButtons = new Button[mapSize, mapSize];
 
+        public static int[] shootCoord = new int[2];
         public static bool isPlaying = false;
         public Enemy enemy;
 
@@ -35,11 +36,10 @@ namespace MyApp
         {
             isPlaying = false;
             GoogleApi.Acsess();
-            GoogleApi.array = GoogleApi.ReadEntries();
+            GoogleApi.array = GoogleApi.ReadEntries(Form2.sheetsArray[0]);
             CreateMap(myMap, myButtons, 0, "Игрок");
             ButtonStart();
             enemy = new Enemy(enemyMap, myMap, enemyButtons, myButtons);
-            enemyMap = enemy.ConfigureShips();
         }
 
         public void CreateMap(int[,] map, Button[,] buttons, int position, string text)
@@ -85,6 +85,7 @@ namespace MyApp
             ClearPole();
             ConfigureShips();
             CreateMap(enemyMap, enemyButtons, 950, "Противник");
+            enemyMap = enemy.ConfigureShips();
         }
 
         public void ClearPole()
@@ -127,14 +128,16 @@ namespace MyApp
         {
             Button pressedButton = sender as Button;
             bool playerTern = Shoot(enemyMap, pressedButton);
+            shootCoord = WriteToArrayCoord(pressedButton);
+            GoogleApi.WriteCoord();
            /* if (!playerTern)
                 enemy.Shoot();*/
 
-            if (!CheckIfMapIsNotEmpty())
+            /*if (!CheckIfMapIsNotEmpty())
             {
                 ClearPole();
                 Init();
-            }
+            }*/
         }
 
         public bool CheckIfMapIsNotEmpty()
@@ -176,8 +179,20 @@ namespace MyApp
                     hit = false;
                     pressedButton.BackColor = Color.Black;
                 }
+                
             }
             return hit;
+        }
+
+        public static int[] WriteToArrayCoord(Button pressedButton)
+        {
+            int[] mass = new int[2];
+            int delta = 0;
+            if (pressedButton.Location.X >= 950)
+                delta = 950;
+            mass[0] = (pressedButton.Location.X - delta) / cellSize;
+            mass[1] = (pressedButton.Location.Y) / cellSize;
+            return mass;
         }
 
     }

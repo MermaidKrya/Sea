@@ -12,21 +12,19 @@ namespace MyApp
 {
     public partial class Form2 : Form
     {
-        string[] sheetsName = new string[2] { "1", "2" };
+        public TextBox sheetNumberPlayer = new TextBox();
+        public TextBox sheetNumberEnemy = new TextBox();
 
-        TextBox sheetNumberPlayer = new TextBox();
-        TextBox sheetNumberEnemy = new TextBox();
-
-        string sheetNumber1 = ""; 
-        string sheetNumber2 = "";
+        public static string[] sheetsArray = new string[2];
 
         public Form2()
         {
             InitializeComponent();
             this.Text = "Морской бой";
+            GoogleApi.Acsess();
             StartGame();
         }
-
+        
         public void StartGame()
         {
             sheetNumberPlayer.Location = new Point(100, 100);
@@ -46,18 +44,20 @@ namespace MyApp
 
         public void Start(object sender, EventArgs e)
         {
-            TakeText();
-            if (sheetNumber1 == sheetNumber2)
+            sheetsArray = WriteToArray();
+            if (sheetsArray[0] == sheetsArray[1])
             {
                 WarningText("Необходимо ввести разные таблицы для игрока и противника");
             }
             else
             {
-                if (ValidData(sheetNumber1) && ValidData(sheetNumber2))
+                if (ValidData(sheetsArray[0]) && ValidData(sheetsArray[1]))
                 {
+                    GoogleApi.CreateEntry();
                     Hide();
                     Form1 myForm = new Form1();
                     myForm.ShowDialog();
+                    
                 }
                 else
                 {
@@ -66,33 +66,36 @@ namespace MyApp
             }                   
         }
 
-        public void WarningText(string text)
+        public void WarningText(object text)
         {
             Label warningText = new Label();
-            warningText.Text = text;
+            warningText.Text = text.ToString();
             warningText.Width = 700;
             warningText.Height = 40;
             warningText.Location = new Point(300, 200);
             this.Controls.Add(warningText);
         }
 
-        public void TakeText()
+        public string[] WriteToArray()
         {
-            sheetNumber1 = sheetNumberPlayer.Text;
-            sheetNumber2 = sheetNumberEnemy.Text;
+            string sheetNumber1 = sheetNumberPlayer.Text;
+            string sheetNumber2 = sheetNumberEnemy.Text;
+            string[] mass = new string[2];
+            mass[0] = sheetNumber1.ToString();
+            mass[1] = sheetNumber2.ToString();
+            return mass;
         }
 
-
-        public bool ValidData(string nameOfSheet)
+        public bool ValidData(object nameOfSheet)
         {
             bool flag = false;
 
-            if (nameOfSheet.Length == 0)
+            if (nameOfSheet.ToString().Length == 0)
                 return false;
 
-            foreach (string str in sheetsName)
+            foreach (string str in GoogleApi.sheetsName)
             {
-                if (nameOfSheet == str)
+                if (nameOfSheet.ToString() == str)
                     flag = true;
             }
 

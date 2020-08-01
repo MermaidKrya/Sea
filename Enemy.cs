@@ -5,8 +5,8 @@ using System.Windows.Forms;
 
 public class Enemy
 {
-	public int[,] myMap = new int[Form1.mapSize, Form1.mapSize];//
-	public int[,] enemyMap = new int[Form1.mapSize, Form1.mapSize];//
+	public int[,] myMap = new int[Form1.mapSize, Form1.mapSize];
+	public int[,] enemyMap = new int[Form1.mapSize, Form1.mapSize];
 
 	public Button[,] myButtons = new Button[Form1.mapSize, Form1.mapSize];
 	public Button[,] enemyButtons = new Button[Form1.mapSize, Form1.mapSize];
@@ -21,6 +21,7 @@ public class Enemy
 
     public int [,] ConfigureShips()
     {
+        GoogleApi.array = GoogleApi.ReadEntries(Form2.sheetsArray[1]);
         for (int i = 0; i < Form1.mapSize; i++)
         {
             for (int j = 0; j < Form1.mapSize; j++)
