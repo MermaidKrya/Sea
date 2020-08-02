@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "VtRdY3qtaRNC2BJef8bs6SAJU+uK4C6EzTveF87L9AYIoqOsCADLqUF/ouOrumvIPVSzl8ykkLZ5PcvG3nrD1A==",
+  "dgSpecHash": "BDHlrd/qYeoTUIRLNfNssMfhfCdP9uRMBUZDDUOJ+3nLipR/4zE6a7NPtn+zhlo9WZmmQEQNErj42rrkqvFlUQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Anastasia\\source\\repos\\MyApp\\MyApp.csproj",
+  "projectFilePath": "C:\\Users\\Anastasia\\source\\repos\\Sea\\MyApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Anastasia\\.nuget\\packages\\google.apis\\1.48.0\\google.apis.1.48.0.nupkg.sha512",
     "C:\\Users\\Anastasia\\.nuget\\packages\\google.apis.auth\\1.48.0\\google.apis.auth.1.48.0.nupkg.sha512",

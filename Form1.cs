@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -130,14 +131,14 @@ namespace MyApp
             bool playerTern = Shoot(enemyMap, pressedButton);
             shootCoord = WriteToArrayCoord(pressedButton);
             GoogleApi.WriteCoord();
-           /* if (!playerTern)
-                enemy.Shoot();*/
+            if (!playerTern)
+                ChangeMyMapAfterShoot();
 
-            /*if (!CheckIfMapIsNotEmpty())
+            if (!CheckIfMapIsNotEmpty())
             {
                 ClearPole();
                 Init();
-            }*/
+            }
         }
 
         public bool CheckIfMapIsNotEmpty()
@@ -194,6 +195,29 @@ namespace MyApp
             mass[1] = (pressedButton.Location.Y) / cellSize;
             return mass;
         }
+
+        public void ChangeMyMapAfterShoot()
+        {
+            int[,] mass = new int[100, 2];
+            int xCoord, yCoord;
+            int index = 0;
+            mass = GoogleApi.ReadCoord(Form2.sheetsArray[0]);
+            index = mass.Length / 2 - 1;
+            xCoord = mass[index, 1];
+            yCoord = mass[index, 0];
+
+            if (myMap[xCoord, yCoord] != 0)
+            {
+                myMap[xCoord, yCoord] = 0;
+                myButtons[xCoord, yCoord].BackColor = Color.Blue;
+            }
+            else
+            {
+                myButtons[xCoord, yCoord].BackColor = Color.Black;
+            }
+
+        }
+
 
     }
 }

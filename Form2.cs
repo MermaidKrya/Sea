@@ -29,9 +29,11 @@ namespace MyApp
         {
             sheetNumberPlayer.Location = new Point(100, 100);
             this.Controls.Add(sheetNumberPlayer);
+            LabelText("Введите идентификатор своей таблицы", 0, 50, 250, 40);
             
             sheetNumberEnemy.Location = new Point(300, 100);
             this.Controls.Add(sheetNumberEnemy);
+            LabelText("Введите идентификатор таблицы противника", 300, 50, 300, 40);
 
             Button startButton = new Button();
             startButton.Text = "Ввод";
@@ -47,7 +49,7 @@ namespace MyApp
             sheetsArray = WriteToArray();
             if (sheetsArray[0] == sheetsArray[1])
             {
-                WarningText("Необходимо ввести разные таблицы для игрока и противника");
+                LabelText("Необходимо ввести разные таблицы для игрока и противника", 300, 200, 700, 40);
             }
             else
             {
@@ -61,18 +63,18 @@ namespace MyApp
                 }
                 else
                 {
-                    WarningText("Проверьте правильность ввода листов таблицы");
+                    LabelText("Проверьте правильность ввода листов таблицы", 300, 200, 700, 40);
                 }
             }                   
         }
 
-        public void WarningText(object text)
+        public void LabelText(object text, int x, int y, int width, int height)
         {
             Label warningText = new Label();
             warningText.Text = text.ToString();
-            warningText.Width = 700;
-            warningText.Height = 40;
-            warningText.Location = new Point(300, 200);
+            warningText.Width = width;
+            warningText.Height = height;
+            warningText.Location = new Point(x, y);
             this.Controls.Add(warningText);
         }
 

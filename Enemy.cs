@@ -40,26 +40,26 @@ public class Enemy
         return myMap;
     }
 
-   /* public bool Shoot()
-    {
-        bool hit = false;
-        int posX = (pressedButton.Location.X - delta) / Form1.cellSize];
-        int posY = pressedButton.Location.Y / Form1.cellSize;
-        if (enemyMap[posX, posY] != 0)
-        {
-            hit = true;
-            enemyMap[posX, posY] = 0;
-            enemyButtons[posX, posY].BackColor = Color.Blue;
-        }
-        else
-        {
-            hit = false;
-            enemyButtons[posX, posY].BackColor = Color.Black;
-        }
-        if (hit)
-            Shoot();
-        return hit;
-    }*/
+    /* public bool Shoot()
+     {
+         bool hit = false;
+         int posX = (pressedButton.Location.X - delta) / Form1.cellSize];
+         int posY = pressedButton.Location.Y / Form1.cellSize;
+         if (enemyMap[posX, posY] != 0)
+         {
+             hit = true;
+             enemyMap[posX, posY] = 0;
+             enemyButtons[posX, posY].BackColor = Color.Blue;
+         }
+         else
+         {
+             hit = false;
+             enemyButtons[posX, posY].BackColor = Color.Black;
+         }
+         if (hit)
+             Shoot();
+         return hit;
+     }*/
 
 
 }

@@ -17,7 +17,7 @@ public class GoogleApi
     static public string[] sheetsName = new string[4] { "1", "2", "3", "4" };
 
     public GoogleApi()
-	{
+    {
         Acsess();
         array = ReadEntries(Form2.sheetsArray[0]);
         CreateEntry();
@@ -52,22 +52,22 @@ public class GoogleApi
         object[,] mass = new object[10, 10];
         //if (values != null && values.Count > 0)
         //{
-            int j = 0;
-            while (j < 10)
-            {            
+        int j = 0;
+        while (j < 10)
+        {
             foreach (var raw in values)
-                {
+            {
                 while (raw.Count < 10)
                 {
                     raw.Add("");
                 }
                 for (int i = 0; i < 10; i++)
-                    {
+                {
                     mass[j, i] = raw[i];
-                    }
-                    j++;
                 }
+                j++;
             }
+        }
         return mass;
     }
 
@@ -106,6 +106,30 @@ public class GoogleApi
         var appendRequest = service.Spreadsheets.Values.Append(valueRange, SpreadSheetId, range);
         appendRequest.ValueInputOption = SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum.USERENTERED;
         var appendResponse = appendRequest.Execute();
+    }
+
+    public static int[,] ReadCoord(string sheet)
+    {
+        var range = $"{sheet}!L3:M103"; //задаем диапазоны
+        var request = service.Spreadsheets.Values.Get(SpreadSheetId, range); //объект запроса
+
+        var response = request.Execute(); //объект ответа
+        var values = response.Values; //доступ к значниям
+        int index = values.Count;
+        int[,] mass = new int[index,2];
+        int j = 0;
+        while (j < index)
+        {
+            foreach (var raw in values)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    mass[j, i] = Convert.ToInt32(raw[i]);
+                }
+                j++;
+            }
+        }
+        return mass;
     }
 
 }

@@ -250,11 +250,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Anastasia\\source\\repos\\MyApp\\MyApp.csproj",
+      "projectUniqueName": "C:\\Users\\Anastasia\\source\\repos\\Sea\\MyApp.csproj",
       "projectName": "MyApp",
-      "projectPath": "C:\\Users\\Anastasia\\source\\repos\\MyApp\\MyApp.csproj",
+      "projectPath": "C:\\Users\\Anastasia\\source\\repos\\Sea\\MyApp.csproj",
       "packagesPath": "C:\\Users\\Anastasia\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Anastasia\\source\\repos\\MyApp\\obj\\",
+      "outputPath": "C:\\Users\\Anastasia\\source\\repos\\Sea\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Anastasia\\AppData\\Roaming\\NuGet\\NuGet.Config",
