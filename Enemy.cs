@@ -19,17 +19,6 @@ public class Enemy
 		this.myButtons = myButtons;
 	}
 
-    public bool Shoot()
-    {
-        Form1 myForm = new Form1();
-        bool hit = false;
-        if (Form1.isPlaying)
-        {
-            myForm.ChangeMyMapAfterShoot();
-        }
-        return hit;
-    }
-
 
     public int [,] ConfigureShips()
     {

@@ -133,9 +133,11 @@ namespace MyApp
         public void PlayerShoot(object sender, EventArgs e)
         {
             Button pressedButton = sender as Button;
+            shootCoord = WriteToArrayCoord(pressedButton);
+            GoogleApi.WriteCoord();
             bool playerTern;
             WhoMove(pressedButton);
-            shootCoord = WriteToArrayCoord(pressedButton);
+            
             
             if (!CheckIfMapIsNotEmpty())
             {
@@ -199,12 +201,12 @@ namespace MyApp
             return mass;
         }
 
-        public void ChangeMyMapAfterShoot()
+        public void ChangeMyMapAfterShoot(string sheet)
         {
             int[,] mass = new int[100, 2];
             int xCoord, yCoord;
             int index = 0;
-            mass = GoogleApi.ReadCoord(Form2.sheetsArray[0]);
+            mass = GoogleApi.ReadCoord(sheet);
             index = mass.Length / 2 - 1;
             xCoord = mass[index, 1];
             yCoord = mass[index, 0];
@@ -228,11 +230,11 @@ namespace MyApp
             int[] mass2 = new int[100];
             int index1 = 0;
             int index2 = 0;
-            mass1 = GoogleApi.ReadTern(Form2.sheetsArray[0]);
+            mass1 = GoogleApi.ReadTern(Form2.sheetsArray[0]); //чтение с моей страницы
             index1 = mass1.Length - 1;
             tern1 = mass1[index1];
 
-            mass2 = GoogleApi.ReadTern(Form2.sheetsArray[1]);
+            mass2 = GoogleApi.ReadTern(Form2.sheetsArray[1]); //чтение со страницы противника
             index2 = mass2.Length - 1;
             tern2 = mass2[index2];
 
@@ -250,6 +252,7 @@ namespace MyApp
                     tern2 = 0;
                     GoogleApi.WrtiteTern(Form2.sheetsArray[0], tern1);
                     GoogleApi.WrtiteTern(Form2.sheetsArray[1], tern2);
+                    ChangeMyMapAfterShoot(Form2.sheetsArray[1]);
                 }
                 else
                 {
@@ -257,7 +260,9 @@ namespace MyApp
                     tern2 = 1;
                     GoogleApi.WrtiteTern(Form2.sheetsArray[0], tern1);
                     GoogleApi.WrtiteTern(Form2.sheetsArray[1], tern2);
+                    ChangeMyMapAfterShoot(Form2.sheetsArray[1]);
                 }
+                
             }
             else
             {
@@ -268,10 +273,10 @@ namespace MyApp
                         enemyButtons[i, j].Enabled = false;
                     }
                 }
-                ChangeMyMapAfterShoot();
+                //ChangeMyMapAfterShoot(Form2.sheetsArray[1]);
             }
 
-            if (tern2 == 1)
+           if (tern2 == 1)
             {
                 for (int i = 0; i < mapSize; i++)
                 {
@@ -280,11 +285,13 @@ namespace MyApp
                         enemyButtons[i, j].Enabled = true;
                     }
                 }
-                if ( Shoot(enemyMap, pressedButton) ){
+                if ( Shoot(enemyMap, pressedButton) )
+                {
                     tern1 = 0;
                     tern2 = 1;
                     GoogleApi.WrtiteTern(Form2.sheetsArray[0], tern1);
                     GoogleApi.WrtiteTern(Form2.sheetsArray[1], tern2);
+                    ChangeMyMapAfterShoot(Form2.sheetsArray[0]);
                 }
                 else
                 {
@@ -292,7 +299,9 @@ namespace MyApp
                     tern2 = 0;
                     GoogleApi.WrtiteTern(Form2.sheetsArray[0], tern1);
                     GoogleApi.WrtiteTern(Form2.sheetsArray[1], tern2);
+                    ChangeMyMapAfterShoot(Form2.sheetsArray[0]);
                 }
+                
             }
             else
             {
@@ -303,7 +312,7 @@ namespace MyApp
                         enemyButtons[i, j].Enabled = false;
                     }
                 }
-                ChangeMyMapAfterShoot();
+                //ChangeMyMapAfterShoot(Form2.sheetsArray[1]);
             }
         }
 
