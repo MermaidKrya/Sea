@@ -150,18 +150,22 @@ public class GoogleApi
     }
     public static int[] ReadTern(string sheet)
     {
-        var range = $"{sheet}!O5:O100"; //задаем диапазоны
+        var range = $"{sheet}!O3:O100"; //задаем диапазоны
         var request = service.Spreadsheets.Values.Get(SpreadSheetId, range); //объект запроса
 
         var response = request.Execute(); //объект ответа
         var values = response.Values; //доступ к значниям
         int index = values.Count;
         int[] mass = new int[index];
-        int i = 0;
+        
         foreach (var raw in values)
         {
-            mass[i] = Convert.ToInt32(raw);
-            i++;
+            for (int i = 0; i < 1; i++)
+            {
+                mass[i] = Convert.ToInt32(raw[i]);
+
+            }
+
         }
         return mass;
     }

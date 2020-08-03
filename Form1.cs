@@ -63,7 +63,8 @@ namespace MyApp
                     button.BackColor = Color.White;
                     if (position > 0)
                     {
-                        button.Click += new EventHandler(PlayerShoot);
+                        if (tern == 1)
+                            button.Click += new EventHandler(PlayerShoot);
                     }
                     buttons[i, j] = button;
                     this.Controls.Add(button);
@@ -133,18 +134,13 @@ namespace MyApp
         {
             Button pressedButton = sender as Button;
             bool playerTern;
+            playerTern = Shoot(enemyMap, pressedButton);
             shootCoord = WriteToArrayCoord(pressedButton);
             tern = WhoMove();
-                playerTern = Shoot(enemyMap, pressedButton);
             if (!playerTern)
                 tern = 0;
-                             
+            GoogleApi.WrtiteTern();
             
-            //int turn;
-            //GoogleApi.WriteCoord();
-            //ChangeMyMapAfterShoot();
-                         
-
             if (!CheckIfMapIsNotEmpty())
             {
                 ClearPole();
@@ -255,7 +251,7 @@ namespace MyApp
             int[] mass = new int[100];
             int index = 0;
             mass = GoogleApi.ReadTern(Form2.sheetsArray[1]);
-            index = mass.Length;
+            index = mass.Length - 1;
             if (mass[index] == 0)
                 whoMove = 1;
             else whoMove = 0;
