@@ -8,6 +8,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using VisioForge.Shared.Accord.Math.Decompositions;
 
 namespace MyApp
 {
@@ -24,6 +25,8 @@ namespace MyApp
 
         public static int[] shootCoord = new int[2];
         public static bool isPlaying = false;
+        public static int tern = 0;
+        
         public Enemy enemy;
 
         public Form1()
@@ -41,6 +44,7 @@ namespace MyApp
             CreateMap(myMap, myButtons, 0, "Игрок");
             ButtonStart();
             enemy = new Enemy(enemyMap, myMap, enemyButtons, myButtons);
+            
         }
 
         public void CreateMap(int[,] map, Button[,] buttons, int position, string text)
@@ -128,11 +132,18 @@ namespace MyApp
         public void PlayerShoot(object sender, EventArgs e)
         {
             Button pressedButton = sender as Button;
-            bool playerTern = Shoot(enemyMap, pressedButton);
+            bool playerTern;
             shootCoord = WriteToArrayCoord(pressedButton);
-            GoogleApi.WriteCoord();
+            tern = WhoMove();
+                playerTern = Shoot(enemyMap, pressedButton);
             if (!playerTern)
-                ChangeMyMapAfterShoot();
+                tern = 0;
+                             
+            
+            //int turn;
+            //GoogleApi.WriteCoord();
+            //ChangeMyMapAfterShoot();
+                         
 
             if (!CheckIfMapIsNotEmpty())
             {
@@ -180,7 +191,7 @@ namespace MyApp
                     hit = false;
                     pressedButton.BackColor = Color.Black;
                 }
-                
+                shootCoord = WriteToArrayCoord(pressedButton);
             }
             return hit;
         }
@@ -218,6 +229,47 @@ namespace MyApp
 
         }
 
+        public int WhoMove()
+        {
+            int whoMove;
+            if (tern == 1)
+            {
+                for (int i = 0; i < mapSize; i++)
+                {
+                    for (int j = 0; j < mapSize; j++)
+                    {
+                        enemyButtons[i, j].Enabled = true;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < mapSize; i++)
+                {
+                    for (int j = 0; j < mapSize; j++)
+                    {
+                        enemyButtons[i, j].Enabled = false;
+                    }
+                }
+            }
+            int[] mass = new int[100];
+            int index = 0;
+            mass = GoogleApi.ReadTern(Form2.sheetsArray[1]);
+            index = mass.Length;
+            if (mass[index] == 0)
+                whoMove = 1;
+            else whoMove = 0;
+            return whoMove;
+        }
 
+        public static int StartMove() {
+            int whoMove;
+            if (Convert.ToInt32(Form2.sheetsArray[0]) < Convert.ToInt32(Form2.sheetsArray[1]))
+            {
+                whoMove = 1;
+            }
+            else whoMove = 0;
+            return whoMove;
+        }
     }
 }

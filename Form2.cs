@@ -56,6 +56,8 @@ namespace MyApp
                 if (ValidData(sheetsArray[0]) && ValidData(sheetsArray[1]))
                 {
                     GoogleApi.CreateEntry();
+                    Form1.tern = Form1.StartMove();
+                    GoogleApi.WrtiteTern();
                     Hide();
                     Form1 myForm = new Form1();
                     myForm.ShowDialog();

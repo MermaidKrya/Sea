@@ -19,6 +19,18 @@ public class Enemy
 		this.myButtons = myButtons;
 	}
 
+    public bool Shoot()
+    {
+        Form1 myForm = new Form1();
+        bool hit = false;
+        if (Form1.isPlaying)
+        {
+            myForm.ChangeMyMapAfterShoot();
+        }
+        return hit;
+    }
+
+
     public int [,] ConfigureShips()
     {
         GoogleApi.array = GoogleApi.ReadEntries(Form2.sheetsArray[1]);
@@ -39,27 +51,5 @@ public class Enemy
         }
         return myMap;
     }
-
-    /* public bool Shoot()
-     {
-         bool hit = false;
-         int posX = (pressedButton.Location.X - delta) / Form1.cellSize];
-         int posY = pressedButton.Location.Y / Form1.cellSize;
-         if (enemyMap[posX, posY] != 0)
-         {
-             hit = true;
-             enemyMap[posX, posY] = 0;
-             enemyButtons[posX, posY].BackColor = Color.Blue;
-         }
-         else
-         {
-             hit = false;
-             enemyButtons[posX, posY].BackColor = Color.Black;
-         }
-         if (hit)
-             Shoot();
-         return hit;
-     }*/
-
 
 }

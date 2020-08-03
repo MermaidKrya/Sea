@@ -23,6 +23,7 @@ public class GoogleApi
         CreateEntry();
         Form2 myForm = new Form2();
         Form2.sheetsArray = myForm.WriteToArray();
+        WrtiteTern();
         WriteCoord();
     }
 
@@ -128,6 +129,39 @@ public class GoogleApi
                 }
                 j++;
             }
+        }
+        return mass;
+    }
+
+    public static void WrtiteTern()
+    {
+        object valueMap;
+        valueMap = Form2.sheetsArray[0];
+
+        var range = $"{valueMap}!O3:O100";
+        var valueRange = new ValueRange();
+
+        var objectList = new List<object>() { Form1.tern, "" };
+        valueRange.Values = new List<IList<object>> { objectList };
+
+        var appendRequest = service.Spreadsheets.Values.Append(valueRange, SpreadSheetId, range);
+        appendRequest.ValueInputOption = SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum.USERENTERED;
+        var appendResponse = appendRequest.Execute();
+    }
+    public static int[] ReadTern(string sheet)
+    {
+        var range = $"{sheet}!O5:O100"; //задаем диапазоны
+        var request = service.Spreadsheets.Values.Get(SpreadSheetId, range); //объект запроса
+
+        var response = request.Execute(); //объект ответа
+        var values = response.Values; //доступ к значниям
+        int index = values.Count;
+        int[] mass = new int[index];
+        int i = 0;
+        foreach (var raw in values)
+        {
+            mass[i] = Convert.ToInt32(raw);
+            i++;
         }
         return mass;
     }
