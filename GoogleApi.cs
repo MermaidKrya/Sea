@@ -23,7 +23,7 @@ public class GoogleApi
         CreateEntry();
         Form2 myForm = new Form2();
         Form2.sheetsArray = myForm.WriteToArray();
-        WrtiteTern();
+        //WrtiteTern();
         WriteCoord();
     }
 
@@ -133,15 +133,12 @@ public class GoogleApi
         return mass;
     }
 
-    public static void WrtiteTern()
+    public static void WrtiteTern(string sheet, int tern)
     {
-        object valueMap;
-        valueMap = Form2.sheetsArray[0];
-
-        var range = $"{valueMap}!O3:O100";
+        var range = $"{sheet}!O3:O100";
         var valueRange = new ValueRange();
 
-        var objectList = new List<object>() { Form1.tern, "" };
+        var objectList = new List<object>() { tern };
         valueRange.Values = new List<IList<object>> { objectList };
 
         var appendRequest = service.Spreadsheets.Values.Append(valueRange, SpreadSheetId, range);

@@ -25,7 +25,7 @@ namespace MyApp
 
         public static int[] shootCoord = new int[2];
         public static bool isPlaying = false;
-        public static int tern = 0;
+        public static int tern;
         
         public Enemy enemy;
 
@@ -134,12 +134,8 @@ namespace MyApp
         {
             Button pressedButton = sender as Button;
             bool playerTern;
-            playerTern = Shoot(enemyMap, pressedButton);
+            WhoMove(pressedButton);
             shootCoord = WriteToArrayCoord(pressedButton);
-            tern = WhoMove();
-            if (!playerTern)
-                tern = 0;
-            GoogleApi.WrtiteTern();
             
             if (!CheckIfMapIsNotEmpty())
             {
@@ -225,10 +221,22 @@ namespace MyApp
 
         }
 
-        public int WhoMove()
+        public void WhoMove(Button pressedButton)
         {
-            int whoMove;
-            if (tern == 1)
+            int tern1, tern2;
+            int[] mass1 = new int[100];
+            int[] mass2 = new int[100];
+            int index1 = 0;
+            int index2 = 0;
+            mass1 = GoogleApi.ReadTern(Form2.sheetsArray[0]);
+            index1 = mass1.Length - 1;
+            tern1 = mass1[index1];
+
+            mass2 = GoogleApi.ReadTern(Form2.sheetsArray[1]);
+            index2 = mass2.Length - 1;
+            tern2 = mass2[index2];
+
+            if (tern1 == 1)
             {
                 for (int i = 0; i < mapSize; i++)
                 {
@@ -236,6 +244,19 @@ namespace MyApp
                     {
                         enemyButtons[i, j].Enabled = true;
                     }
+                }
+                if (Shoot(enemyMap, pressedButton)) {
+                    tern1 = 1;
+                    tern2 = 0;
+                    GoogleApi.WrtiteTern(Form2.sheetsArray[0], tern1);
+                    GoogleApi.WrtiteTern(Form2.sheetsArray[1], tern2);
+                }
+                else
+                {
+                    tern1 = 0;
+                    tern2 = 1;
+                    GoogleApi.WrtiteTern(Form2.sheetsArray[0], tern1);
+                    GoogleApi.WrtiteTern(Form2.sheetsArray[1], tern2);
                 }
             }
             else
@@ -247,23 +268,49 @@ namespace MyApp
                         enemyButtons[i, j].Enabled = false;
                     }
                 }
+                ChangeMyMapAfterShoot();
             }
-            int[] mass = new int[100];
-            int index = 0;
-            mass = GoogleApi.ReadTern(Form2.sheetsArray[1]);
-            index = mass.Length - 1;
-            if (mass[index] == 0)
-                whoMove = 1;
-            else whoMove = 0;
-            return whoMove;
+
+            if (tern2 == 1)
+            {
+                for (int i = 0; i < mapSize; i++)
+                {
+                    for (int j = 0; j < mapSize; j++)
+                    {
+                        enemyButtons[i, j].Enabled = true;
+                    }
+                }
+                if ( Shoot(enemyMap, pressedButton) ){
+                    tern1 = 0;
+                    tern2 = 1;
+                    GoogleApi.WrtiteTern(Form2.sheetsArray[0], tern1);
+                    GoogleApi.WrtiteTern(Form2.sheetsArray[1], tern2);
+                }
+                else
+                {
+                    tern1 = 1;
+                    tern2 = 0;
+                    GoogleApi.WrtiteTern(Form2.sheetsArray[0], tern1);
+                    GoogleApi.WrtiteTern(Form2.sheetsArray[1], tern2);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < mapSize; i++)
+                {
+                    for (int j = 0; j < mapSize; j++)
+                    {
+                        enemyButtons[i, j].Enabled = false;
+                    }
+                }
+                ChangeMyMapAfterShoot();
+            }
         }
 
         public static int StartMove() {
             int whoMove;
             if (Convert.ToInt32(Form2.sheetsArray[0]) < Convert.ToInt32(Form2.sheetsArray[1]))
-            {
                 whoMove = 1;
-            }
             else whoMove = 0;
             return whoMove;
         }

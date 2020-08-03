@@ -57,7 +57,7 @@ namespace MyApp
                 {
                     GoogleApi.CreateEntry();
                     Form1.tern = Form1.StartMove();
-                    GoogleApi.WrtiteTern();
+                    GoogleApi.WrtiteTern(sheetsArray[0], Form1.tern);
                     Hide();
                     Form1 myForm = new Form1();
                     myForm.ShowDialog();
