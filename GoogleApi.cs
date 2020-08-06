@@ -154,16 +154,18 @@ public class GoogleApi
         var values = response.Values; //доступ к значниям
         int index = values.Count;
         int[] mass = new int[index];
-        
-        foreach (var raw in values)
+        int i = 0;
+        while (i < index)
         {
-            for (int i = 0; i < 1; i++)
+            foreach (var raw in values)
             {
-                mass[i] = Convert.ToInt32(raw[i]);
-
+                
+                mass[i] = Convert.ToInt32(raw[0]);
+               
+                i++;
             }
-
         }
+        
         return mass;
     }
 
