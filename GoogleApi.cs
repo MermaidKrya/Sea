@@ -159,14 +159,13 @@ public class GoogleApi
         {
             foreach (var raw in values)
             {
-                
                 mass[i] = Convert.ToInt32(raw[0]);
-               
                 i++;
             }
         }
         
         return mass;
     }
+
 
 }

@@ -26,6 +26,10 @@ namespace MyApp
         public static int[] shootCoord = new int[2];
         public static bool isPlaying = false;
         public static int tern;
+
+        Timer timer = new Timer();
+        public int ticks = 0;
+
         
         public Enemy enemy;
 
@@ -75,6 +79,33 @@ namespace MyApp
             this.Controls.Add(mapLabel);
         }
 
+        public void TimerTick(object sender, EventArgs e)
+        {
+            ticks++;
+            if (ticks == 5)
+            {
+                int tern1;
+                int[] mass1 = new int[100];
+                int index1 = 0;
+                mass1 = GoogleApi.ReadTern(Form2.sheetsArray[0]); //чтение с моей страницы
+                index1 = mass1.Length - 1;
+                tern1 = mass1[index1];
+
+                if (tern1 == 1)
+                {
+                    for (int i = 0; i < mapSize; i++)
+                    {
+                        for (int j = 0; j < mapSize; j++)
+                        {
+                            enemyButtons[i, j].Click += new EventHandler(PlayerShoot);
+                        }
+                    }
+
+                }
+                
+            }
+        }
+
         public void ButtonStart()
         {
             Button startButton = new Button();
@@ -91,7 +122,6 @@ namespace MyApp
             ConfigureShips();
             CreateMap(enemyMap, enemyButtons, 650, "Противник");
             enemyMap = enemy.ConfigureShips();
-            UpdatePole();
         }
 
         public void ClearPole()
@@ -135,8 +165,7 @@ namespace MyApp
             Button pressedButton = sender as Button;
             
             WhoMove(pressedButton);
-            UpdatePole();
-
+            //UpdatePole();
            
             if (!CheckIfMapIsNotEmpty())
             {
@@ -338,5 +367,14 @@ namespace MyApp
             }
 
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            Timer timer = new Timer();
+            timer.Interval = (10 * 1000); // 10 secs
+            timer.Tick += new EventHandler(TimerTick);
+            timer.Start();
+        }
+
     }
 }
