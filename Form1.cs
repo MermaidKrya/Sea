@@ -27,10 +27,7 @@ namespace MyApp
         public static bool isPlaying = false;
         public static int tern;
 
-        Timer timer = new Timer();
-        public int ticks = 0;
-
-        
+                
         public Enemy enemy;
 
         public Form1()
@@ -45,12 +42,12 @@ namespace MyApp
             isPlaying = false;
             GoogleApi.Acsess();
             GoogleApi.array = GoogleApi.ReadEntries(Form2.sheetsArray[0]);
-            CreateMap(myMap, myButtons, 0, "Игрок");
+            ConfigureShips();
             ButtonStart();
             enemy = new Enemy(enemyMap, myMap, enemyButtons, myButtons);
         }
 
-        public void CreateMap(int[,] map, Button[,] buttons, int position, string text)
+        public void CreateMap(int[,] map, Button[,] buttons, string text)
         {
             this.Width = mapSize * 2 * cellSize + 50;
             this.Height = (mapSize + 3) * cellSize + 20;
@@ -62,48 +59,18 @@ namespace MyApp
                     map[i, j] = 0;
 
                     Button button = new Button();
-                    button.Location = new Point(position + j * cellSize, i * cellSize);
+                    button.Location = new Point(j * cellSize, i * cellSize);
                     button.Size = new Size(cellSize, cellSize);
                     button.BackColor = Color.White;
-                    if (position > 0)
-                    {
-                            button.Click += new EventHandler(PlayerShoot);
-                    }
+                    //button.Click += new EventHandler(PlayerShoot);
                     buttons[i, j] = button;
                     this.Controls.Add(button);
                 }
             }
             Label mapLabel = new Label();
             mapLabel.Text = text;
-            mapLabel.Location = new Point(position + mapSize * cellSize / 2, mapSize * cellSize + 10);
+            mapLabel.Location = new Point(mapSize * cellSize / 2, mapSize * cellSize + 10);
             this.Controls.Add(mapLabel);
-        }
-
-        public void TimerTick(object sender, EventArgs e)
-        {
-            ticks++;
-            if (ticks == 5)
-            {
-                int tern1;
-                int[] mass1 = new int[100];
-                int index1 = 0;
-                mass1 = GoogleApi.ReadTern(Form2.sheetsArray[0]); //чтение с моей страницы
-                index1 = mass1.Length - 1;
-                tern1 = mass1[index1];
-
-                if (tern1 == 1)
-                {
-                    for (int i = 0; i < mapSize; i++)
-                    {
-                        for (int j = 0; j < mapSize; j++)
-                        {
-                            enemyButtons[i, j].Click += new EventHandler(PlayerShoot);
-                        }
-                    }
-
-                }
-                
-            }
         }
 
         public void ButtonStart()
@@ -119,8 +86,7 @@ namespace MyApp
         {
             isPlaying = true;
             ClearPole();
-            ConfigureShips();
-            CreateMap(enemyMap, enemyButtons, 650, "Противник");
+            CreateMap(enemyMap, enemyButtons, "Противник");
             enemyMap = enemy.ConfigureShips();
         }
 
@@ -163,10 +129,8 @@ namespace MyApp
         public void PlayerShoot(object sender, EventArgs e)
          {
             Button pressedButton = sender as Button;
-            
             WhoMove(pressedButton);
-            //UpdatePole();
-           
+            
             if (!CheckIfMapIsNotEmpty())
             {
                 ClearPole();
@@ -198,15 +162,12 @@ namespace MyApp
             bool hit = false;
             if (isPlaying)
             {
-                int delta = 0;
-                if (pressedButton.Location.X >= 650)
-                    delta = 650;
-                if (map[(pressedButton.Location.Y) / cellSize, (pressedButton.Location.X - delta) / cellSize] != 0)
+                if (map[(pressedButton.Location.Y) / cellSize, pressedButton.Location.X / cellSize] != 0)
                 {
                     hit = true;
-                    map[pressedButton.Location.Y / cellSize, (pressedButton.Location.X - delta) / cellSize] = 0;
+                    map[pressedButton.Location.Y / cellSize, pressedButton.Location.X / cellSize] = 0;
                     pressedButton.BackColor = Color.Blue;
-                    pressedButton.Text = GoogleApi.array[pressedButton.Location.Y / cellSize, (pressedButton.Location.X - delta) / cellSize].ToString();
+                    pressedButton.Text = GoogleApi.array[pressedButton.Location.Y / cellSize, pressedButton.Location.X / cellSize].ToString();
                 }
                 else
                 {
@@ -217,6 +178,7 @@ namespace MyApp
             return hit;
         }
 
+        //убрать
         public static int[] WriteToArrayCoord(Button pressedButton)
         {
             int[] mass = new int[2];
@@ -228,6 +190,7 @@ namespace MyApp
             return mass;
         }
 
+        //убрать
         public void ChangeMyMapAfterShoot(string sheet)
         {
             int[,] mass = new int[100, 2];
@@ -270,13 +233,13 @@ namespace MyApp
 
             if (tern1 == 1)
             {
-                for (int i = 0; i < mapSize; i++)
+                /*for (int i = 0; i < mapSize; i++)
                 {
                     for (int j = 0; j < mapSize; j++)
                     {
                         enemyButtons[i, j].Enabled = true;
                     }
-                }
+                }*/
                 if (shootData) 
                 {
                     tern1 = 1;
@@ -295,14 +258,14 @@ namespace MyApp
             }
             else
             {
-                for (int i = 0; i < mapSize; i++)
+                /*for (int i = 0; i < mapSize; i++)
                 {
                     for (int j = 0; j < mapSize; j++)
                     {
                         enemyButtons[i, j].Enabled = false;
                     }
-                }
-                ChangeMyMapAfterShoot(Form2.sheetsArray[0]);
+                }*/
+                //ChangeMyMapAfterShoot(Form2.sheetsArray[0]);
                 //ChangeMyMapAfterShoot(Form2.sheetsArray[1]);
             }
         }
@@ -355,26 +318,41 @@ namespace MyApp
                 }
 
             }
-            if (tern1 == 1)
-            {
-                for (int i = 0; i < mapSize; i++)
-                {
-                    for (int j = 0; j < mapSize; j++)
-                    {
-                        enemyButtons[i, j].Enabled = true;
-                    }
-                }
-            }
 
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             Timer timer = new Timer();
-            timer.Interval = (10 * 1000); // 10 secs
+            timer.Interval = (5000); // 5 sec
             timer.Tick += new EventHandler(TimerTick);
             timer.Start();
         }
+
+        public void TimerTick(object sender, EventArgs e)
+        {
+           
+            int tern1;
+            int[] mass1 = new int[100];
+            int index1 = 0;
+            mass1 = GoogleApi.ReadTern(Form2.sheetsArray[0]); //чтение с моей страницы
+            index1 = mass1.Length - 1;
+            tern1 = mass1[index1];
+            if (tern1 == 1)
+            {
+                for (int i = 0; i < mapSize; i++)
+                {
+                    for (int j = 0; j < mapSize; j++)
+                    {
+                        enemyButtons[i, j].Click += new EventHandler(PlayerShoot);
+                        
+                    }
+                }
+            }
+            //this.Refresh();
+
+        }
+
 
     }
 }

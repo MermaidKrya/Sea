@@ -89,6 +89,7 @@ public class GoogleApi
         var appendResponse = appendRequest.Execute();
     }
 
+    //можно убрать
     public static void WriteCoord()
     {
         object valueEnemy;
@@ -108,7 +109,7 @@ public class GoogleApi
         appendRequest.ValueInputOption = SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum.USERENTERED;
         var appendResponse = appendRequest.Execute();
     }
-
+    //можно убрать
     public static int[,] ReadCoord(string sheet)
     {
         var range = $"{sheet}!L3:M103"; //задаем диапазоны
