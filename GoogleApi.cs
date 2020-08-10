@@ -23,8 +23,6 @@ public class GoogleApi
         CreateEntry();
         Form2 myForm = new Form2();
         Form2.sheetsArray = myForm.WriteToArray();
-        //WrtiteTern();
-        WriteCoord();
     }
 
     public static void Acsess()
@@ -89,51 +87,6 @@ public class GoogleApi
         var appendResponse = appendRequest.Execute();
     }
 
-    //можно убрать
-    public static void WriteCoord()
-    {
-        object valueEnemy;
-        valueEnemy = Form2.sheetsArray[1];
-
-        int xCoord, yCoord;
-        xCoord = Form1.shootCoord[0];
-        yCoord = Form1.shootCoord[1];
-
-        var range = $"{valueEnemy}!L3:M103";
-        var valueRange = new ValueRange();
-
-        var objectList = new List<object>() { xCoord, yCoord };
-        valueRange.Values = new List<IList<object>> { objectList };
-
-        var appendRequest = service.Spreadsheets.Values.Append(valueRange, SpreadSheetId, range);
-        appendRequest.ValueInputOption = SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum.USERENTERED;
-        var appendResponse = appendRequest.Execute();
-    }
-    //можно убрать
-    public static int[,] ReadCoord(string sheet)
-    {
-        var range = $"{sheet}!L3:M103"; //задаем диапазоны
-        var request = service.Spreadsheets.Values.Get(SpreadSheetId, range); //объект запроса
-
-        var response = request.Execute(); //объект ответа
-        var values = response.Values; //доступ к значниям
-        int index = values.Count;
-        int[,] mass = new int[index,2];
-        int j = 0;
-        while (j < index)
-        {
-            foreach (var raw in values)
-            {
-                for (int i = 0; i < 2; i++)
-                {
-                    mass[j, i] = Convert.ToInt32(raw[i]);
-                }
-                j++;
-            }
-        }
-        return mass;
-    }
-
     public static void WrtiteTern(string sheet, int tern)
     {
         var range = $"{sheet}!O3:O100";
@@ -167,6 +120,5 @@ public class GoogleApi
         
         return mass;
     }
-
 
 }

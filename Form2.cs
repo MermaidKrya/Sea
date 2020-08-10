@@ -62,7 +62,6 @@ namespace MyApp
                     Form1 myForm = new Form1();
                     myForm.ShowDialog();
                     myForm.UpdatePole();
-                    
                 }
                 else
                 {
@@ -110,4 +109,5 @@ namespace MyApp
         }
 
     }
+
 }
