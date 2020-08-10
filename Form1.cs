@@ -87,6 +87,11 @@ namespace MyApp
             ClearPole();
             CreateMap();
             enemyMap = enemy.ConfigureShips();
+
+            Timer timer = new Timer();
+            timer.Interval = (5000); // 5 sec
+            timer.Start();
+            timer.Tick += new EventHandler(TimerTick);
         }
 
         public void ClearPole()
@@ -223,10 +228,7 @@ namespace MyApp
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Timer timer = new Timer();
-            timer.Interval = (5000); // 5 sec
-            timer.Start();
-            timer.Tick += new EventHandler(TimerTick);
+            
         }
 
         public void TimerTick(object sender, EventArgs e)
