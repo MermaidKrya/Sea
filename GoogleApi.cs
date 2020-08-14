@@ -49,17 +49,29 @@ public class GoogleApi
         var response = request.Execute(); //объект ответа
         var values = response.Values; //доступ к значниям
         object[,] mass = new object[10, 10];
+        var raw1 = new List<object>();
         //if (values != null && values.Count > 0)
         //{
+        //int i = 0;
         int j = 0;
         while (j < 10)
         {
+            while (values.Count < 10)
+            {
+                while (raw1.Count < 10)
+                {
+                    raw1.Add("");
+                }
+                values.Add(raw1);
+            }
+            
             foreach (var raw in values)
             {
                 while (raw.Count < 10)
                 {
                     raw.Add("");
                 }
+                
                 for (int i = 0; i < 10; i++)
                 {
                     mass[j, i] = raw[i];
