@@ -17,6 +17,8 @@ namespace MyApp
 
         public static string[] sheetsArray = new string[2];
 
+        Label warningLabel = new Label();
+
         public Form2()
         {
             InitializeComponent();
@@ -46,10 +48,11 @@ namespace MyApp
 
         public void Start(object sender, EventArgs e)
         {
+            Warning();
             sheetsArray = WriteToArray();
             if (sheetsArray[0] == sheetsArray[1])
             {
-                LabelText("Необходимо ввести разные таблицы для игрока и противника", 300, 200, 700, 40);
+                warningLabel.Text = "Необходимо ввести разные таблицы для игрока и противника";
             }
             else
             {
@@ -65,7 +68,7 @@ namespace MyApp
                 }
                 else
                 {
-                    LabelText("Проверьте правильность ввода листов таблицы", 300, 200, 700, 40);
+                    warningLabel.Text = "Проверьте правильность ввода листов таблицы";
                 }
             }                   
         }
@@ -80,6 +83,12 @@ namespace MyApp
             this.Controls.Add(warningText);
         }
 
+        public void Warning()
+        {
+            warningLabel.Location = new Point(300, 200);
+            warningLabel.Size = new Size(700, 40);
+            this.Controls.Add(warningLabel);
+        }
         public string[] WriteToArray()
         {
             string sheetNumber1 = sheetNumberPlayer.Text;

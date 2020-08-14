@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using VisioForge.Shared.Accord.Math.Decompositions;
+using VisioForge.Shared.AForge.Imaging;
+using VisioForge.Shared.Decklink.SDK;
 
 namespace MyApp
 {
@@ -25,8 +27,15 @@ namespace MyApp
 
         public static bool isPlaying = false;
         public static int tern;
+        int kol = 0;
 
-                
+        Label whoseMove = new Label();
+        Label amount = new Label();
+        Label myRemainder = new Label();
+        Label enemyRemainder = new Label();
+        Label time = new Label();
+        GroupBox groupBox = new GroupBox();
+
         public Enemy enemy;
 
         public Form1()
@@ -89,9 +98,39 @@ namespace MyApp
             enemyMap = enemy.ConfigureShips();
 
             Timer timer = new Timer();
-            timer.Interval = (5000); // 5 sec
+            timer.Interval = (2000); // 2 sec
             timer.Start();
             timer.Tick += new EventHandler(TimerTick);
+
+            CreateGroupBox();
+            AddToGroupBox("Ход", 25, 50, 200, 50);
+            AddToGroupBox("Осталось клеток противника", 25, 100, 300, 50);
+            AddToGroupBox("Осталось клеток своих", 25, 150, 300, 50);
+            AddToGroupBox("Время", 25, 200, 200, 50);
+
+            Balance(enemyRemainder, 400, 100, 100, 50);
+            Balance(myRemainder, 400, 150, 100, 50);
+            Balance(amount, 400, 50, 100, 50);
+            Balance(time, 400, 200, 100, 50);
+            myRemainder.Text = RemainderOfCells(myMap).ToString();
+            enemyRemainder.Text = RemainderOfCells(enemyMap).ToString();
+            amount.Text = kol.ToString();
+            time.Text = DateTime.Now.ToString();
+
+            tern = ValueOfTern(0);
+            string text;
+            Information();
+            if (tern == 1)
+            {
+                text = "Ваш ход";
+                whoseMove.BackColor = Color.Green;
+            }
+            else
+            {
+                text = "Ход противника";
+                whoseMove.BackColor = Color.Red;
+            }
+            whoseMove.Text = text;
         }
 
         public void ClearPole()
@@ -133,7 +172,27 @@ namespace MyApp
         public void PlayerShoot(object sender, EventArgs e)
          {
             Button pressedButton = sender as Button;
+            kol++;
             WhoMove(pressedButton);
+           
+            tern = ValueOfTern(0);
+            myRemainder.Text = RemainderOfCells(myMap).ToString();
+            enemyRemainder.Text = RemainderOfCells(enemyMap).ToString();
+            amount.Text = kol.ToString();
+
+            string text;
+            if (tern == 1)
+            {
+                text = "Ваш ход";
+                whoseMove.BackColor = Color.Green;
+            }
+            else
+            {
+                text = "Ход противника";
+                whoseMove.BackColor = Color.Red;
+            }
+            whoseMove.Text = text;
+
             if (!CheckIfMapIsNotEmpty())
             {
                 ClearPole();
@@ -185,7 +244,6 @@ namespace MyApp
         {
             int tern1, tern2;
             tern1 = ValueOfTern(0);
-            tern2 = ValueOfTern(1);
             bool shootData = Shoot(enemyMap, pressedButton);
             if (tern1 == 1)
             {
@@ -205,7 +263,6 @@ namespace MyApp
                 }
            
             }
-            
         }
 
         public static int StartMove() 
@@ -226,18 +283,19 @@ namespace MyApp
                 EnableOfButtons(false);
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            
-        }
-
         public void TimerTick(object sender, EventArgs e)
         {
             tern = ValueOfTern(0);
-            if (tern == 1) 
+            if (tern == 1)
+            {
                 EnableOfButtons(true);
+            }
+                
             else
-                EnableOfButtons(false);                
+            {
+                EnableOfButtons(false);
+            }
+                              
         }
 
         public int ValueOfTern(int nameOfSheet)
@@ -262,6 +320,55 @@ namespace MyApp
             }
         }
 
+        public void Information()
+        {
+            whoseMove.TextAlign = ContentAlignment.MiddleCenter;
+            whoseMove.Font = new Font(whoseMove.Font.Name, 20, whoseMove.Font.Style);
+            whoseMove.Location = new Point(mapSize * cellSize + 20, 0);
+            whoseMove.Width = 300;
+            whoseMove.Height = 100;
+            whoseMove.BackColor = Color.FromArgb(255, 0, 255);
+            this.Controls.Add(whoseMove);
+        }
+
+        public void Balance(Label name, int x, int y, int width, int height)
+        {
+            name.Location = new Point(x, y);
+            name.Size = new Size(width, height);
+            groupBox.Controls.Add(name);
+        }
+
+        public void AddToGroupBox(string text, int x, int y, int width, int height)
+        {
+            Label label = new Label { Text = text };
+            label.Location = new Point(x, y);
+            label.Size = new Size(width, height);
+            groupBox.Controls.Add(label);
+        }
+        public void CreateGroupBox()
+        {
+            groupBox.Location = new Point(mapSize * cellSize + 20, 200);
+            groupBox.Text = "Ход игры";
+            groupBox.Width = 500;
+            groupBox.Height = 250;
+            this.Controls.Add(groupBox);
+        }
+
+        public int RemainderOfCells(int[,] map)
+        {
+            int remainder = 0;
+            for (int i = 0; i < mapSize; i++)
+            {
+                for (int j = 0; j < mapSize; j++)
+                {
+                    if (map[i, j] == 1)
+                    {
+                        remainder++;
+                    }
+                }
+            }
+            return remainder;
+        }
     }
 
 }
