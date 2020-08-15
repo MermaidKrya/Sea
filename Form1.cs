@@ -186,7 +186,7 @@ namespace MyApp
             Button pressedButton = sender as Button;
             kol++;
             WhoMove(pressedButton);
-            int remainder1, remainder2;
+            
             tern = ValueOfTern(0);
             myRemainder.Text = RemainderOfCells(myMap).ToString();
             enemyRemainder.Text = RemainderOfCells(enemyMap).ToString();
@@ -205,34 +205,13 @@ namespace MyApp
             }
             whoseMove.Text = text;
 
-           /* remainder1 = RemainderOfCells(enemyMap);
-            remainder2 = RemainderOfCells(myMap);
-            if (remainder1 == 0)
-            {
-                Label winFinish = new Label();
-                winFinish.Font = new Font(winFinish.Font.Name, 20, winFinish.Font.Style);
-                winFinish.Location = new Point(mapSize * cellSize + 20, 500);
-                winFinish.Width = 300;
-                winFinish.Height = 100;
-                text = "Вы выиграли";
-                winFinish.BackColor = Color.Green;
-            }
-            if (remainder2 == 0)
-            {
-                Label loseFnish = new Label();
-                loseFnish.Font = new Font(loseFnish.Font.Name, 20, loseFnish.Font.Style);
-                loseFnish.Location = new Point(mapSize * cellSize + 20, 500);
-                loseFnish.Width = 300;
-                loseFnish.Height = 100;
-                text = "Вы проиграли";
-                loseFnish.BackColor = Color.Red;
-            }*/
-
             if (!CheckIfMapIsNotEmpty())
             {
                 ClearPole();
+                Hide();
                 Form2 myForm = new Form2();
-                myForm.StartGame();
+                myForm.ShowDialog();
+
             }
         }
 
