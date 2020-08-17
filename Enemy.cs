@@ -20,7 +20,7 @@ public class Enemy
 	}
 
 
-    public int [,] ConfigureShips()
+    public int [,] ConfigureShips() //заполняем массив 0/1 в зависимости от наличия там текста
     {
         GoogleApi.array = GoogleApi.ReadEntries(Form2.sheetsArray[1]);
         for (int i = 0; i < Form1.mapSize; i++)

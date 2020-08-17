@@ -15,9 +15,9 @@ namespace MyApp
         public TextBox sheetNumberPlayer = new TextBox();
         public TextBox sheetNumberEnemy = new TextBox();
 
-        public static string[] sheetsArray = new string[2];
+        public static string[] sheetsArray = new string[2]; //массив идентификаторов страниц(название листов)
 
-        Label warningLabel = new Label();
+        Label warningLabel = new Label();   //выводится, если введены некорректные данные
 
         public Form2()
         {
@@ -73,7 +73,7 @@ namespace MyApp
             }                   
         }
 
-        public void LabelText(object text, int x, int y, int width, int height)
+        public void LabelText(object text, int x, int y, int width, int height) //создает labels
         {
             Label warningText = new Label();
             warningText.Text = text.ToString();
@@ -89,7 +89,7 @@ namespace MyApp
             warningLabel.Size = new Size(700, 40);
             this.Controls.Add(warningLabel);
         }
-        public string[] WriteToArray()
+        public string[] WriteToArray() //записывает в массив значения идентификаторов таблиц, mass[0] - номер таблицы игрока, mass[1] - номер таблицы противника
         {
             string sheetNumber1 = sheetNumberPlayer.Text;
             string sheetNumber2 = sheetNumberEnemy.Text;
@@ -99,7 +99,7 @@ namespace MyApp
             return mass;
         }
 
-        public bool ValidData(object nameOfSheet)
+        public bool ValidData(object nameOfSheet) //проверка на корректность введенных данных
         {
             bool flag = false;
 

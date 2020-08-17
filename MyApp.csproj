@@ -11,10 +11,4 @@
     <PackageReference Include="VisioForge.DotNet.Core.TRIAL" Version="12.0.39" />
   </ItemGroup>
 
-	<ItemGroup>
-        <None Update="client_secrets.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-	</ItemGroup>
-
 </Project>

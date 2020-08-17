@@ -11,21 +11,21 @@ public class GoogleApi
 {
     static readonly string[] Scopes = { SheetsService.Scope.Spreadsheets };
     static readonly string ApplicationName = "SeaBattle";
-    static readonly string SpreadSheetId = "1eb2vaC45-prUvId_fjTEPqHbbeXYbooVciDVkXQBmkU";
+    static readonly string SpreadSheetId = "109PrXJ3mJJMaf4uMWhcNIiyPeOw-eAkjSVdT0Ry3_PE";
     static SheetsService service;
-    static public object[,] array = new object[10, 10];
+    static public object[,] array = new object[10, 10]; //массив кораблей
     static public string[] sheetsName = new string[4] { "1", "2", "3", "4" };
 
     public GoogleApi()
     {
-        Acsess();
+        /*Acsess();
         array = ReadEntries(Form2.sheetsArray[0]);
         CreateEntry();
         Form2 myForm = new Form2();
-        Form2.sheetsArray = myForm.WriteToArray();
+        Form2.sheetsArray = myForm.WriteToArray();*/
     }
 
-    public static void Acsess()
+    public static void Acsess() //осуществляет доступ к таблице
     {
         GoogleCredential credential;
         using (var stream = new FileStream("client_secrets.json", FileMode.Open, FileAccess.Read))
@@ -41,7 +41,7 @@ public class GoogleApi
         });
     }
 
-    public static object[,] ReadEntries(string sheet)
+    public static object[,] ReadEntries(string sheet)   //считывает значения из таблицы 
     {
         var range = $"{sheet}!A1:J10"; //задаем диапазоны
         var request = service.Spreadsheets.Values.Get(SpreadSheetId, range); //объект запроса
@@ -50,9 +50,6 @@ public class GoogleApi
         var values = response.Values; //доступ к значниям
         object[,] mass = new object[10, 10];
         var raw1 = new List<object>();
-        //if (values != null && values.Count > 0)
-        //{
-        //int i = 0;
         int j = 0;
         while (j < 10)
         {
@@ -82,7 +79,7 @@ public class GoogleApi
         return mass;
     }
 
-    public static void CreateEntry()
+    public static void CreateEntry() //запись в таблицу идентификаторов игрока и противника
     {
         object valuePlayer, valueEnemy;
         valuePlayer = Form2.sheetsArray[0];
@@ -99,7 +96,7 @@ public class GoogleApi
         var appendResponse = appendRequest.Execute();
     }
 
-    public static void WrtiteTern(string sheet, int tern)
+    public static void WrtiteTern(string sheet, int tern) //запись 0/1 в таблицу в зависимости от того, чей сейчас ход
     {
         var range = $"{sheet}!O3:O100";
         var valueRange = new ValueRange();
